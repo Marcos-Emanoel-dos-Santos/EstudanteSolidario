@@ -9,6 +9,11 @@ header{
     flex-wrap: wrap;
 }
 
+#div-title a.menu-item {
+    color: white;
+    text-decoration: none;
+}
+
 #div-title, #menu .menu-item{
     text-transform: uppercase;
     color: white;
