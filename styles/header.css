@@ -38,7 +38,7 @@ header{
 #profile.show {
     display: flex;
 }
-#login.show {
+#login.hide {
     display: none;
 }
 

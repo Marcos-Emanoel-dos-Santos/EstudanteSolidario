@@ -23,6 +23,60 @@ body{
     margin-bottom: 3vh;
 }
 
+
+#overlay{
+    display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+#div-login{
+    display: none;
+    width: 50vw;
+    height: 66vh;
+    position: fixed;
+    left: 25%;
+    top: 16.5%;
+    z-index: 2;
+    border-radius: 25px;
+    background-color: #F1F1F1;
+    align-items: center;
+}
+#div-login.show, #overlay.show{
+    display: flex;
+    flex-direction: column;
+}
+
+#div-login .form-title{
+    text-transform: uppercase;
+    margin: 4vh 0 6vh 0;
+    font-size: 1.3em;
+}
+
+#div-login input, #div-login button{
+    box-sizing: border-box;
+    width: 75%;
+    border: 1px solid #1E1E1E;
+    border-radius: 5px;
+    padding: 0.8em;
+}
+#div-login input{
+    background-color: #E4E4E4;
+    margin-bottom: 5%;
+}
+
+#div-login button{
+    background-color: #138F21;
+}
+
+
+
+
 #activities{
     display: grid;
     grid-template-columns: 50% 50%;
