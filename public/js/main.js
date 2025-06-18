@@ -197,3 +197,86 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+const universityInput = document.getElementById("university");
+const studentAreaSelect = document.getElementById("student-area-select");
+
+const loginForm = document.getElementById("login-form");
+
+if (loginForm) {
+    loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById("login-email").value;
+        const password = document.getElementById("login-password").value;
+
+        try {
+            const res = await fetch("/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) throw new Error(data.error || "Erro desconhecido");
+
+            // Exibir mensagem e fechar popup (se desejar)
+            document.getElementById("login-mensagem").innerText = data.message;
+            console.log("Usuário logado:", data.user);
+
+            // Armazenar dados do usuário
+            localStorage.setItem("usuarioLogado", JSON.stringify(data.user));
+
+            // Ocultar popup de login
+            toggle.exitLoginPopup();
+
+        } catch (err) {
+            document.getElementById("login-mensagem").innerText = "Erro: " + err.message;
+        }
+    });
+}
+
+document.querySelector("#div-signup form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // Coletar dados do formulário
+    const fname = document.getElementById("fname").value.trim();
+    const lname = document.getElementById("lname").value.trim();
+    const email = document.getElementById("email-signup").value.trim();
+    const password = document.getElementById("passowrd-signup").value.trim();
+
+    const day = document.getElementById("birthDay").value;
+    const month = document.getElementById("birthMonth").value;
+    const year = document.getElementById("year").value;
+    const birthday = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+
+    const university = document.getElementById("university").value.trim() || "NotStudent";
+    const course = document.getElementById("student-area-select").value || "NotStudent";
+
+    const name = `${fname} ${lname}`;
+
+    if (!name || !email || !password || !birthday) {
+        alert("Por favor, preencha todos os campos obrigatórios.");
+        return;
+    }
+
+    try {
+        const res = await fetch("/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, birthday, course, university, email, password })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.error || "Erro ao criar conta.");
+
+        alert("Conta criada com sucesso!");
+        toggle.exitLoginPopup(); // ou: fechar popup de cadastro, abrir login etc.
+
+    } catch (err) {
+        console.error(err);
+        alert("Erro: " + err.message);
+    }
+});
